@@ -22,14 +22,12 @@ export default function LogoDisplay({ src }: { src: string }) {
   if (error) return <FallbackIcon />
 
   return (
-    <div className="w-20 h-20 rounded-2xl overflow-hidden shadow-lg bg-white flex items-center justify-center">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={src}
-        alt="Logo Sicoob Aracoop"
-        className="w-16 h-16 object-contain"
-        onError={() => setError(true)}
-      />
-    </div>
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src={src}
+      alt="Logo Sicoob Aracoop"
+      className="h-20 object-contain"
+      onError={() => setError(true)}
+    />
   )
 }
