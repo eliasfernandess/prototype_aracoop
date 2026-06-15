@@ -25,7 +25,6 @@ export async function POST(request: NextRequest) {
     return response
   } catch (error) {
     console.error('POST /api/auth/login:', error)
-    const msg = error instanceof Error ? error.message : String(error)
-    return NextResponse.json({ erro: `Erro interno: ${msg}` }, { status: 500 })
+    return NextResponse.json({ erro: 'Erro interno do servidor' }, { status: 500 })
   }
 }
