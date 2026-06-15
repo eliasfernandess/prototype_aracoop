@@ -6,8 +6,8 @@ import { Link2 } from 'lucide-react'
 
 export default function LoginPage() {
   const router = useRouter()
-  const [email, setEmail] = useState('comunicacao@sicoobaracoop.com.br')
-  const [senha, setSenha] = useState('aracoop@2024')
+  const [email, setEmail] = useState('')
+  const [senha, setSenha] = useState('')
   const [erro, setErro] = useState('')
   const [loading, setLoading] = useState(false)
   const [showSenha, setShowSenha] = useState(false)
@@ -184,16 +184,6 @@ export default function LoginPage() {
               )}
             </button>
 
-            <div className="bg-gray-50 rounded-xl px-4 py-3 flex items-start gap-2.5">
-              <div className="w-5 h-5 rounded-full bg-[#00B4A0]/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-                <svg width="10" height="10" viewBox="0 0 24 24" fill="#00B4A0" stroke="none">
-                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
-                </svg>
-              </div>
-              <p className="text-xs text-gray-500 leading-relaxed">
-                Protótipo demonstrativo — credenciais já preenchidas. Clique em <strong>Entrar</strong>.
-              </p>
-            </div>
           </form>
         </div>
       </div>

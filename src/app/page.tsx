@@ -101,11 +101,8 @@ export default async function PublicPage() {
           ))}
         </div>
 
-        <footer className="mt-10 text-center space-y-1">
+        <footer className="mt-10 text-center">
           <p className="text-gray-400 text-xs">© {new Date().getFullYear()} Sicoob Aracoop</p>
-          <a href="/login" className="block text-gray-300 hover:text-gray-500 text-xs transition-colors">
-            Painel Admin
-          </a>
         </footer>
       </div>
     </main>
