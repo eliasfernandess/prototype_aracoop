@@ -2,38 +2,34 @@
 
 import { useState } from 'react'
 
-function SicoobLogo({ size = 52 }: { size?: number }) {
-  const w = Math.round(size * 1.35)
+function FallbackIcon() {
   return (
-    <svg width={w} height={size} viewBox="0 0 135 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <polygon points="0,0 67,0 34,54" fill="#009E8E" />
-      <polygon points="68,0 135,0 101,54" fill="#00725E" />
-      <polygon points="34,54 101,54 68,100" fill="#9DC31A" />
-    </svg>
+    <div
+      className="w-20 h-20 rounded-2xl flex items-center justify-center shadow-lg"
+      style={{ background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(8px)' }}
+    >
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+      </svg>
+    </div>
   )
 }
 
 export default function LogoDisplay({ src }: { src: string }) {
   const [error, setError] = useState(false)
 
-  if (error) {
-    return (
-      <div className="flex flex-col items-center gap-3">
-        <SicoobLogo size={56} />
-        <span className="font-bold text-2xl tracking-wide" style={{ color: '#003641' }}>
-          Aracoop
-        </span>
-      </div>
-    )
-  }
+  if (error) return <FallbackIcon />
 
   return (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img
-      src={src}
-      alt="Logo Sicoob Aracoop"
-      className="h-20 object-contain"
-      onError={() => setError(true)}
-    />
+    <div className="w-20 h-20 rounded-2xl overflow-hidden shadow-lg bg-white flex items-center justify-center">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={src}
+        alt="Logo Sicoob Aracoop"
+        className="w-16 h-16 object-contain"
+        onError={() => setError(true)}
+      />
+    </div>
   )
 }
