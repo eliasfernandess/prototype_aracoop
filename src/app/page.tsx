@@ -2,20 +2,10 @@ import { prisma } from '@/lib/prisma'
 import { buildUtmUrl } from '@/lib/utm'
 import { getConfigs } from '@/lib/config'
 import LinkButton from '@/components/LinkButton'
+import LogoDisplay from '@/components/LogoDisplay'
 import { CheckCircle } from 'lucide-react'
 
 export const dynamic = 'force-dynamic'
-
-function SicoobLogo({ size = 52 }: { size?: number }) {
-  const w = Math.round(size * 1.35)
-  return (
-    <svg width={w} height={size} viewBox="0 0 135 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <polygon points="0,0 67,0 34,54" fill="#009E8E" />
-      <polygon points="68,0 135,0 101,54" fill="#00725E" />
-      <polygon points="34,54 101,54 68,100" fill="#9DC31A" />
-    </svg>
-  )
-}
 
 export default async function PublicPage() {
   let links: Awaited<ReturnType<typeof prisma.link.findMany>> = []
@@ -30,9 +20,8 @@ export default async function PublicPage() {
     // DB unavailable — render page with empty state
   }
 
-  const corPrimaria = configs.cor_primaria || '#00B4A0'
   const bio = configs.bio || 'Cooperativa de crédito feita por pessoas, para pessoas.'
-  const logoUrl = configs.logo_url || ''
+  const logoSrc = configs.logo_url || '/logo.png'
 
   return (
     <main className="min-h-screen" style={{ background: '#F4F6F5' }}>
@@ -40,25 +29,12 @@ export default async function PublicPage() {
       <div
         className="w-full px-4 pt-12 pb-32 flex flex-col items-center"
         style={{
-          background: `linear-gradient(160deg, ${corPrimaria} 0%, #0D4A35 55%, #0D2B1E 100%)`,
+          background: 'linear-gradient(160deg, #004F62 0%, #003641 40%, #001C24 100%)',
         }}
       >
-        {/* Logo */}
+        {/* Logo — coloque seu arquivo em public/logo.png */}
         <div className="mb-5">
-          {logoUrl ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={logoUrl} alt="Logo Sicoob Aracoop" className="h-16 object-contain" />
-          ) : (
-            <div className="flex flex-col items-center gap-3">
-              <SicoobLogo size={56} />
-              <span
-                className="font-bold text-2xl tracking-wide"
-                style={{ color: corPrimaria }}
-              >
-                Aracoop
-              </span>
-            </div>
-          )}
+          <LogoDisplay src={logoSrc} />
         </div>
 
         {/* Name + handle */}
