@@ -18,10 +18,17 @@ function SicoobLogo({ size = 52 }: { size?: number }) {
 }
 
 export default async function PublicPage() {
-  const [links, configs] = await Promise.all([
-    prisma.link.findMany({ where: { ativo: true }, orderBy: { ordem: 'asc' } }),
-    getConfigs(),
-  ])
+  let links: Awaited<ReturnType<typeof prisma.link.findMany>> = []
+  let configs: Record<string, string> = {}
+
+  try {
+    ;[links, configs] = await Promise.all([
+      prisma.link.findMany({ where: { ativo: true }, orderBy: { ordem: 'asc' } }),
+      getConfigs(),
+    ])
+  } catch {
+    // DB unavailable — render page with empty state
+  }
 
   const corPrimaria = configs.cor_primaria || '#00B4A0'
   const bio = configs.bio || 'Cooperativa de crédito feita por pessoas, para pessoas.'
