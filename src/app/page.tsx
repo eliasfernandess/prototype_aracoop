@@ -29,7 +29,7 @@ export default async function PublicPage() {
       <div
         className="w-full px-4 pt-12 pb-32 flex flex-col items-center"
         style={{
-          background: 'linear-gradient(160deg, #004F62 0%, #003641 40%, #001C24 100%)',
+          background: 'linear-gradient(180deg, #00B4A0 0%, #003E4D 45%, #001C24 100%)',
         }}
       >
         {/* Logo — coloque seu arquivo em public/logo.png */}
