@@ -21,7 +21,7 @@ async function main() {
   // Default configs
   const configs = [
     { chave: 'cor_primaria', valor: '#00B4A0' },
-    { chave: 'ga4_id', valor: '' },
+    { chave: 'ga4_id', valor: 'G-48MLYDBJD2' },
     { chave: 'logo_url', valor: '' },
     { chave: 'bio', valor: 'Cooperativa de crédito feita por pessoas, para pessoas. Acesse nossos serviços e campanhas. 💚' },
     { chave: 'titulo_site', valor: 'Sicoob Aracoop | Links' },
