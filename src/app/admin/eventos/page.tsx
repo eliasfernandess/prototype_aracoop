@@ -1,12 +1,17 @@
 'use client'
 
 import { useEffect, useState, useCallback } from 'react'
-import { Plus, Trash2, ChevronDown, ChevronUp, Link2, Globe, Pencil, Check, X } from 'lucide-react'
+import { Plus, Trash2, ChevronDown, ChevronUp, Link2, Globe, Pencil, Check, X, Share2 } from 'lucide-react'
+import ShareModal from '@/components/ShareModal'
 
 interface EventoLink {
   id: number
   titulo: string
   url: string
+  utmSource?: string | null
+  utmMedium?: string | null
+  utmCampaign?: string | null
+  utmContent?: string | null
   ativo: boolean
   ordem: number
 }
@@ -34,12 +39,20 @@ export default function EventosPage() {
   const [addingLinkTo, setAddingLinkTo] = useState<number | null>(null)
   const [novoLinkTitulo, setNovoLinkTitulo] = useState('')
   const [novoLinkUrl, setNovoLinkUrl] = useState('')
+  const [novoLinkUtmSource, setNovoLinkUtmSource] = useState('')
+  const [novoLinkUtmMedium, setNovoLinkUtmMedium] = useState('')
+  const [novoLinkUtmCampaign, setNovoLinkUtmCampaign] = useState('')
+  const [novoLinkUtmContent, setNovoLinkUtmContent] = useState('')
+  const [showUtmFields, setShowUtmFields] = useState(false)
   const [savingLink, setSavingLink] = useState(false)
 
   // Edit evento inline
   const [editingEvento, setEditingEvento] = useState<number | null>(null)
   const [editTitulo, setEditTitulo] = useState('')
   const [editDesc, setEditDesc] = useState('')
+
+  // Share modal
+  const [shareLink, setShareLink] = useState<EventoLink | null>(null)
 
   const fetchEventos = useCallback(async () => {
     const res = await fetch('/api/eventos')
@@ -99,13 +112,25 @@ export default function EventosPage() {
     const res = await fetch(`/api/eventos/${eventoId}/links`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ titulo: novoLinkTitulo, url: novoLinkUrl }),
+      body: JSON.stringify({
+        titulo: novoLinkTitulo,
+        url: novoLinkUrl,
+        utmSource: novoLinkUtmSource || undefined,
+        utmMedium: novoLinkUtmMedium || undefined,
+        utmCampaign: novoLinkUtmCampaign || undefined,
+        utmContent: novoLinkUtmContent || undefined,
+      }),
     })
     if (res.ok) {
       const novoLink = await res.json()
       setEventos((prev) => prev.map((e) => e.id === eventoId ? { ...e, links: [...e.links, novoLink] } : e))
       setNovoLinkTitulo('')
       setNovoLinkUrl('')
+      setNovoLinkUtmSource('')
+      setNovoLinkUtmMedium('')
+      setNovoLinkUtmCampaign('')
+      setNovoLinkUtmContent('')
+      setShowUtmFields(false)
       setAddingLinkTo(null)
     }
     setSavingLink(false)
@@ -279,6 +304,9 @@ export default function EventosPage() {
                         style={{ transform: link.ativo ? 'translateX(16px)' : 'translateX(0)' }}
                       />
                     </button>
+                    <button onClick={() => setShareLink(link)} className="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-gray-100 text-gray-400 hover:text-[#00B4A0]">
+                      <Share2 size={13} />
+                    </button>
                     <button onClick={() => deletarLink(evento.id, link.id)} className="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-red-50 text-gray-300 hover:text-red-500">
                       <Trash2 size={13} />
                     </button>
@@ -301,8 +329,20 @@ export default function EventosPage() {
                       placeholder="URL (https://...) *"
                       className="w-full border border-gray-200 rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#00B4A0]"
                     />
+                    <button type="button" onClick={() => setShowUtmFields(!showUtmFields)} className="text-xs text-[#00B4A0] flex items-center gap-1">
+                      <ChevronDown size={12} style={{ transform: showUtmFields ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
+                      {showUtmFields ? 'Ocultar parâmetros UTM' : 'Adicionar parâmetros UTM (opcional)'}
+                    </button>
+                    {showUtmFields && (
+                      <div className="grid grid-cols-2 gap-2">
+                        <input value={novoLinkUtmSource} onChange={(e) => setNovoLinkUtmSource(e.target.value)} placeholder="utm_source" className="border border-gray-200 rounded-xl px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-[#00B4A0]" />
+                        <input value={novoLinkUtmMedium} onChange={(e) => setNovoLinkUtmMedium(e.target.value)} placeholder="utm_medium" className="border border-gray-200 rounded-xl px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-[#00B4A0]" />
+                        <input value={novoLinkUtmCampaign} onChange={(e) => setNovoLinkUtmCampaign(e.target.value)} placeholder="utm_campaign" className="border border-gray-200 rounded-xl px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-[#00B4A0]" />
+                        <input value={novoLinkUtmContent} onChange={(e) => setNovoLinkUtmContent(e.target.value)} placeholder="utm_content" className="border border-gray-200 rounded-xl px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-[#00B4A0]" />
+                      </div>
+                    )}
                     <div className="flex gap-2 justify-end">
-                      <button onClick={() => { setAddingLinkTo(null); setNovoLinkTitulo(''); setNovoLinkUrl('') }} className="px-3 py-1.5 text-xs text-gray-500 border border-gray-200 rounded-lg">
+                      <button onClick={() => { setAddingLinkTo(null); setNovoLinkTitulo(''); setNovoLinkUrl(''); setNovoLinkUtmSource(''); setNovoLinkUtmMedium(''); setNovoLinkUtmCampaign(''); setNovoLinkUtmContent(''); setShowUtmFields(false) }} className="px-3 py-1.5 text-xs text-gray-500 border border-gray-200 rounded-lg">
                         Cancelar
                       </button>
                       <button
@@ -332,6 +372,14 @@ export default function EventosPage() {
           </div>
         ))}
       </div>
+
+      {shareLink && (
+        <ShareModal
+          url={`${typeof window !== 'undefined' ? window.location.origin : 'https://prototype-aracoop.vercel.app'}/e/${shareLink.id}`}
+          titulo={shareLink.titulo}
+          onClose={() => setShareLink(null)}
+        />
+      )}
     </div>
   )
 }

@@ -68,14 +68,18 @@ model Evento {
 }
 
 model EventoLink {
-  id        Int      @id @default(autoincrement())
-  eventoId  Int
-  titulo    String
-  url       String
-  ativo     Boolean  @default(true)
-  ordem     Int      @default(0)
-  criadoEm DateTime @default(now())
-  evento    Evento   @relation(fields: [eventoId], references: [id], onDelete: Cascade)
+  id           Int      @id @default(autoincrement())
+  eventoId     Int
+  titulo       String
+  url          String
+  utmSource    String?
+  utmMedium    String?
+  utmCampaign  String?
+  utmContent   String?
+  ativo        Boolean  @default(true)
+  ordem        Int      @default(0)
+  criadoEm    DateTime @default(now())
+  evento       Evento   @relation(fields: [eventoId], references: [id], onDelete: Cascade)
 
   @@map("evento_links")
 }

@@ -6,11 +6,11 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
   const user = await getAuthUser()
   if (!user) return NextResponse.json({ erro: 'Não autorizado' }, { status: 401 })
   try {
-    const { titulo, url } = await request.json()
+    const { titulo, url, utmSource, utmMedium, utmCampaign, utmContent } = await request.json()
     if (!titulo || !url) return NextResponse.json({ erro: 'Título e URL obrigatórios' }, { status: 400 })
     const count = await prisma.eventoLink.count({ where: { eventoId: Number(params.id) } })
     const link = await prisma.eventoLink.create({
-      data: { titulo, url, eventoId: Number(params.id), ordem: count + 1 },
+      data: { titulo, url, eventoId: Number(params.id), ordem: count + 1, utmSource, utmMedium, utmCampaign, utmContent },
     })
     return NextResponse.json(link, { status: 201 })
   } catch {
