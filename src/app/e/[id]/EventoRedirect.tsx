@@ -10,13 +10,15 @@ interface Props {
 
 export default function EventoRedirect({ finalUrl, eventoTitulo, linkTitulo }: Props) {
   const [count, setCount] = useState(3)
+  const safeUrl = /^https?:\/\//i.test(finalUrl) ? finalUrl : `https://${finalUrl}`
 
   useEffect(() => {
+    const safeUrl = /^https?:\/\//i.test(finalUrl) ? finalUrl : `https://${finalUrl}`
     const interval = setInterval(() => {
       setCount((c) => {
         if (c <= 1) {
           clearInterval(interval)
-          window.location.href = finalUrl
+          window.location.href = safeUrl
           return 0
         }
         return c - 1
@@ -67,7 +69,7 @@ export default function EventoRedirect({ finalUrl, eventoTitulo, linkTitulo }: P
 
         {/* Fallback */}
         <a
-          href={finalUrl}
+          href={safeUrl}
           className="text-[#00B4A0] text-sm underline underline-offset-2 hover:opacity-80 transition-opacity"
         >
           Clique aqui se não for redirecionado
