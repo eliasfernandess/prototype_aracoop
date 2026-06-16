@@ -24,9 +24,9 @@ export default function TooltipInfo({ text }: Props) {
         <Info size={12} />
       </button>
       {visible && (
-        <span className="absolute left-5 top-1/2 -translate-y-1/2 z-50 w-56 bg-gray-900 text-white text-xs rounded-xl px-3 py-2 shadow-xl leading-relaxed pointer-events-none">
+        <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 z-50 w-56 bg-gray-900 text-white text-xs rounded-xl px-3 py-2 shadow-xl leading-relaxed pointer-events-none whitespace-normal">
           {text}
-          <span className="absolute right-full top-1/2 -translate-y-1/2 border-4 border-transparent border-r-gray-900" />
+          <span className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-gray-900" />
         </span>
       )}
     </span>
