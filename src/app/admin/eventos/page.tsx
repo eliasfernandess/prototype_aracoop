@@ -3,6 +3,7 @@
 import { useEffect, useState, useCallback } from 'react'
 import { Plus, Trash2, ChevronDown, ChevronUp, Link2, Globe, Pencil, Check, X, Share2 } from 'lucide-react'
 import ShareModal from '@/components/ShareModal'
+import TooltipInfo from '@/components/TooltipInfo'
 
 interface EventoLink {
   id: number
@@ -335,10 +336,24 @@ export default function EventosPage() {
                     </button>
                     {showUtmFields && (
                       <div className="grid grid-cols-2 gap-2">
-                        <input value={novoLinkUtmSource} onChange={(e) => setNovoLinkUtmSource(e.target.value)} placeholder="utm_source" className="border border-gray-200 rounded-xl px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-[#00B4A0]" />
-                        <input value={novoLinkUtmMedium} onChange={(e) => setNovoLinkUtmMedium(e.target.value)} placeholder="utm_medium" className="border border-gray-200 rounded-xl px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-[#00B4A0]" />
-                        <input value={novoLinkUtmCampaign} onChange={(e) => setNovoLinkUtmCampaign(e.target.value)} placeholder="utm_campaign" className="border border-gray-200 rounded-xl px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-[#00B4A0]" />
-                        <input value={novoLinkUtmContent} onChange={(e) => setNovoLinkUtmContent(e.target.value)} placeholder="utm_content" className="border border-gray-200 rounded-xl px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-[#00B4A0]" />
+                        {([
+                          ['utm_source', novoLinkUtmSource, setNovoLinkUtmSource, 'ex: instagram', 'Identifica a origem do tráfego. Ex: instagram, whatsapp, google'],
+                          ['utm_medium', novoLinkUtmMedium, setNovoLinkUtmMedium, 'ex: social', 'Identifica o canal ou meio. Ex: social, email, cpc, banner'],
+                          ['utm_campaign', novoLinkUtmCampaign, setNovoLinkUtmCampaign, 'ex: nome_evento', 'Nome da campanha de marketing. Ex: lancamento_produto, evento_jun'],
+                          ['utm_content', novoLinkUtmContent, setNovoLinkUtmContent, 'ex: link_1', 'Diferencia versões do mesmo link. Ex: link_divulgacao, link_inscricao'],
+                        ] as const).map(([label, value, setter, placeholder, tooltip]) => (
+                          <div key={label}>
+                            <label className="flex items-center gap-1 text-[10px] font-medium text-gray-400 mb-1">
+                              {label}<TooltipInfo text={tooltip} />
+                            </label>
+                            <input
+                              value={value}
+                              onChange={(e) => setter(e.target.value)}
+                              placeholder={placeholder}
+                              className="w-full border border-gray-200 rounded-xl px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-[#00B4A0]"
+                            />
+                          </div>
+                        ))}
                       </div>
                     )}
                     <div className="flex gap-2 justify-end">

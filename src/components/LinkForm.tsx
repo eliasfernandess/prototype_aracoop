@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { X, Link2 } from 'lucide-react'
 import { ICON_MAP, ICON_OPTIONS, COLOR_OPTIONS } from '@/lib/icons'
+import TooltipInfo from './TooltipInfo'
 import type { Link } from '@/app/admin/page'
 
 interface Props {
@@ -211,20 +212,23 @@ export default function LinkForm({ link, onClose, onSave }: Props) {
               Parâmetros UTM
             </p>
             <div className="grid grid-cols-2 gap-3">
-              {[
-                ['utm_source', utmSource, setUtmSource, 'pagina_links'],
-                ['utm_medium', utmMedium, setUtmMedium, 'botao'],
-                ['utm_campaign', utmCampaign, (v: string) => { setUtmCampaign(v); setCampanha(v) }, 'nome_campanha'],
-                ['utm_content', utmContent, setUtmContent, 'nome_botao'],
-              ].map(([label, value, setter, placeholder]) => (
-                <div key={label as string}>
-                  <label className="block text-[10px] font-medium text-gray-400 mb-1">{label as string}</label>
+              {([
+                ['utm_source', utmSource, setUtmSource, 'pagina_links', 'Identifica a origem do tráfego. Ex: instagram, whatsapp, google'],
+                ['utm_medium', utmMedium, setUtmMedium, 'botao', 'Identifica o canal ou meio. Ex: social, email, cpc, banner'],
+                ['utm_campaign', utmCampaign, (v: string) => { setUtmCampaign(v); setCampanha(v) }, 'nome_campanha', 'Nome da campanha de marketing. Ex: lancamento_conta, black_friday'],
+                ['utm_content', utmContent, setUtmContent, 'nome_botao', 'Diferencia versões do mesmo link. Ex: botao_topo, banner_lateral'],
+              ] as const).map(([label, value, setter, placeholder, tooltip]) => (
+                <div key={label}>
+                  <label className="flex items-center gap-1 text-[10px] font-medium text-gray-400 mb-1">
+                    {label}
+                    <TooltipInfo text={tooltip} />
+                  </label>
                   <input
-                    value={value as string}
+                    value={value}
                     onChange={(e) => (setter as (v: string) => void)(e.target.value)}
                     className="w-full border border-gray-200 rounded-xl px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:border-transparent bg-gray-50"
                     style={{ '--tw-ring-color': '#00B4A0' } as React.CSSProperties}
-                    placeholder={placeholder as string}
+                    placeholder={placeholder}
                   />
                 </div>
               ))}
