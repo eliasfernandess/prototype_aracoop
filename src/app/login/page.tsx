@@ -70,20 +70,6 @@ export default function LoginPage() {
           <p className="text-white/70 text-base leading-relaxed max-w-xs">
             Centralize campanhas, gere UTMs automáticos e acompanhe cada clique — tudo a partir de um painel simples.
           </p>
-          <div className="flex gap-8 mt-10">
-            <div>
-              <div className="text-white font-bold text-2xl">9</div>
-              <div className="text-white/50 text-xs mt-0.5">links ativos</div>
-            </div>
-            <div>
-              <div className="text-white font-bold text-2xl">8,2k</div>
-              <div className="text-white/50 text-xs mt-0.5">cliques no mês</div>
-            </div>
-            <div>
-              <div className="text-white font-bold text-2xl">100%</div>
-              <div className="text-white/50 text-xs mt-0.5">rastreável</div>
-            </div>
-          </div>
         </div>
 
         {/* Bottom */}

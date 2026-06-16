@@ -30,10 +30,6 @@ export default function SortableLink({ link, index, showDrag, onEdit, onDelete, 
   const IconComponent = ICON_MAP[link.icone ?? 'link'] ?? ICON_MAP['link']
   const iconColor = link.corIcone ?? '#00B4A0'
 
-  // Mock click count
-  const mockClicks = [1842, 1207, 968, 745, 531, 412, 389, 312, 156]
-  const clicks = mockClicks[(index - 1) % mockClicks.length]
-
   return (
     <div
       ref={setNodeRef}
@@ -78,12 +74,6 @@ export default function SortableLink({ link, index, showDrag, onEdit, onDelete, 
           {link.categoria}
         </span>
       )}
-
-      {/* Clicks */}
-      <div className="text-center flex-shrink-0 w-16">
-        <div className="text-gray-800 font-bold text-sm">{clicks.toLocaleString('pt-BR')}</div>
-        <div className="text-gray-400 text-[10px] uppercase tracking-wide">Cliques</div>
-      </div>
 
       {/* Toggle */}
       <button

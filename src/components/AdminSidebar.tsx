@@ -2,7 +2,7 @@
 
 import { usePathname, useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { Link2, BarChart2, QrCode, Settings, Eye, LogOut } from 'lucide-react'
+import { Link2, BarChart2, QrCode, Settings, Eye, LogOut, CalendarDays } from 'lucide-react'
 import { useState, useEffect } from 'react'
 
 interface Props {
@@ -13,6 +13,7 @@ interface Props {
 
 const navItems = [
   { href: '/admin', label: 'Links', icon: Link2, exact: true },
+  { href: '/admin/eventos', label: 'Eventos', icon: CalendarDays, exact: false },
   { href: '/admin/analises', label: 'Análises', icon: BarChart2, exact: false },
   { href: '/admin/qr-codes', label: 'QR Codes', icon: QrCode, exact: false },
   { href: '/admin/configuracoes', label: 'Configurações', icon: Settings, exact: false },
